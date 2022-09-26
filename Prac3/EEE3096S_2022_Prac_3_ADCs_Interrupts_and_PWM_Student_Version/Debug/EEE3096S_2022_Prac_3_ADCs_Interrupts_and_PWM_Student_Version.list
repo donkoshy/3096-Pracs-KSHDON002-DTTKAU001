@@ -302,8 +302,7 @@ int main(void)
 	  //TO DO:
 
 	  //TASK 2
-	  //Test your pollADC function and display via UART
-	  adc_val = pollADC();
+	  adc_val = pollADC();		//gets the current adc value
  800026c:	f000 fab4 	bl	80007d8 <pollADC>
  8000270:	0002      	movs	r2, r0
  8000272:	4b26      	ldr	r3, [pc, #152]	; (800030c <main+0xd8>)
@@ -315,7 +314,7 @@ int main(void)
  800027c:	4b25      	ldr	r3, [pc, #148]	; (8000314 <main+0xe0>)
  800027e:	0018      	movs	r0, r3
  8000280:	f004 fa24 	bl	80046cc <siprintf>
-	  HAL_UART_Transmit(&huart2, buffer, sizeof(buffer), 100);
+	  HAL_UART_Transmit(&huart2, buffer, sizeof(buffer), 100);		//sends the adc val to termius
  8000284:	4923      	ldr	r1, [pc, #140]	; (8000314 <main+0xe0>)
  8000286:	4824      	ldr	r0, [pc, #144]	; (8000318 <main+0xe4>)
  8000288:	2364      	movs	r3, #100	; 0x64
@@ -324,8 +323,7 @@ int main(void)
 
 
 	  //TASK 3
-	  //Test your ADCtoCRR function. Display CRR value via UART
-	  crr_val = ADCtoCRR(adc_val);
+	  crr_val = ADCtoCRR(adc_val);			//converts the adc val to crr
  8000290:	4b1e      	ldr	r3, [pc, #120]	; (800030c <main+0xd8>)
  8000292:	681b      	ldr	r3, [r3, #0]
  8000294:	0018      	movs	r0, r3
@@ -339,7 +337,6 @@ int main(void)
  80002a4:	4a1d      	ldr	r2, [pc, #116]	; (800031c <main+0xe8>)
  80002a6:	6812      	ldr	r2, [r2, #0]
  80002a8:	641a      	str	r2, [r3, #64]	; 0x40
-
 	  sprintf(buffer2, "P: %u \r\n", crr_val);
  80002aa:	4b1c      	ldr	r3, [pc, #112]	; (800031c <main+0xe8>)
  80002ac:	681a      	ldr	r2, [r3, #0]
@@ -347,7 +344,7 @@ int main(void)
  80002b0:	4b1c      	ldr	r3, [pc, #112]	; (8000324 <main+0xf0>)
  80002b2:	0018      	movs	r0, r3
  80002b4:	f004 fa0a 	bl	80046cc <siprintf>
-	  HAL_UART_Transmit(&huart2, buffer2, sizeof(buffer2), 100);
+	  HAL_UART_Transmit(&huart2, buffer2, sizeof(buffer2), 100);	//sends the crr val to termius
  80002b8:	491a      	ldr	r1, [pc, #104]	; (8000324 <main+0xf0>)
  80002ba:	4817      	ldr	r0, [pc, #92]	; (8000318 <main+0xe4>)
  80002bc:	2364      	movs	r3, #100	; 0x64
@@ -357,8 +354,7 @@ int main(void)
 
 
 	  //TASK 4
-	  //Complete rest of implementation
-	  dutyCycle = (crr_val*100)/47999;
+	  dutyCycle = (crr_val*100)/47999;			//calculates the duty cycle
  80002c4:	4b15      	ldr	r3, [pc, #84]	; (800031c <main+0xe8>)
  80002c6:	681b      	ldr	r3, [r3, #0]
  80002c8:	2264      	movs	r2, #100	; 0x64
@@ -377,7 +373,7 @@ int main(void)
  80002e2:	4b14      	ldr	r3, [pc, #80]	; (8000334 <main+0x100>)
  80002e4:	0018      	movs	r0, r3
  80002e6:	f004 f9f1 	bl	80046cc <siprintf>
-	  HAL_UART_Transmit(&huart2, buffer3, sizeof(buffer3), 100);
+	  HAL_UART_Transmit(&huart2, buffer3, sizeof(buffer3), 100);	//sends the duty cycle to termius
  80002ea:	4912      	ldr	r1, [pc, #72]	; (8000334 <main+0x100>)
  80002ec:	480a      	ldr	r0, [pc, #40]	; (8000318 <main+0xe4>)
  80002ee:	2364      	movs	r3, #100	; 0x64
@@ -1164,7 +1160,7 @@ void EXTI0_1_IRQHandler(void)
  800077e:	0002      	movs	r2, r0
  8000780:	4b12      	ldr	r3, [pc, #72]	; (80007cc <EXTI0_1_IRQHandler+0x5c>)
  8000782:	601a      	str	r2, [r3, #0]
-	if ((currentTime-previousTime > 200) && (B1_Pin == 1)){	//button is pressed
+	if ((currentTime-previousTime > 200) && (B1_Pin == 1)){		//button is pressed
  8000784:	4b11      	ldr	r3, [pc, #68]	; (80007cc <EXTI0_1_IRQHandler+0x5c>)
  8000786:	681a      	ldr	r2, [r3, #0]
  8000788:	4b11      	ldr	r3, [pc, #68]	; (80007d0 <EXTI0_1_IRQHandler+0x60>)
@@ -1179,7 +1175,7 @@ void EXTI0_1_IRQHandler(void)
  8000798:	009b      	lsls	r3, r3, #2
  800079a:	429a      	cmp	r2, r3
  800079c:	d104      	bne.n	80007a8 <EXTI0_1_IRQHandler+0x38>
-			delayTime = 500;
+			delayTime = 500;		//changes delaytime to 500 when button is pressed
  800079e:	4b0d      	ldr	r3, [pc, #52]	; (80007d4 <EXTI0_1_IRQHandler+0x64>)
  80007a0:	22fa      	movs	r2, #250	; 0xfa
  80007a2:	0052      	lsls	r2, r2, #1
@@ -1193,13 +1189,13 @@ void EXTI0_1_IRQHandler(void)
  80007ae:	005b      	lsls	r3, r3, #1
  80007b0:	429a      	cmp	r2, r3
  80007b2:	d103      	bne.n	80007bc <EXTI0_1_IRQHandler+0x4c>
-			delayTime = 1000;
+			delayTime = 1000;		//changes delaytime to 1000 when button is pressed
  80007b4:	4b07      	ldr	r3, [pc, #28]	; (80007d4 <EXTI0_1_IRQHandler+0x64>)
  80007b6:	22fa      	movs	r2, #250	; 0xfa
  80007b8:	0092      	lsls	r2, r2, #2
  80007ba:	801a      	strh	r2, [r3, #0]
 		}
-		previousTime = currentTime;
+		previousTime = currentTime;		//sets the previoustime to currentime timestamp
  80007bc:	4b03      	ldr	r3, [pc, #12]	; (80007cc <EXTI0_1_IRQHandler+0x5c>)
  80007be:	681a      	ldr	r2, [r3, #0]
  80007c0:	4b03      	ldr	r3, [pc, #12]	; (80007d0 <EXTI0_1_IRQHandler+0x60>)
@@ -1223,7 +1219,7 @@ uint32_t pollADC(void){
 	//TO DO:
 	//TASK 2
 	// Complete the function body
-	HAL_ADC_Start(&hadc);
+	HAL_ADC_Start(&hadc);		//starts the adc polling
  80007de:	4b0c      	ldr	r3, [pc, #48]	; (8000810 <pollADC+0x38>)
  80007e0:	0018      	movs	r0, r3
  80007e2:	f000 fc1d 	bl	8001020 <HAL_ADC_Start>
@@ -1232,13 +1228,13 @@ uint32_t pollADC(void){
  80007e8:	2164      	movs	r1, #100	; 0x64
  80007ea:	0018      	movs	r0, r3
  80007ec:	f000 fcac 	bl	8001148 <HAL_ADC_PollForConversion>
-	uint32_t val = HAL_ADC_GetValue(&hadc);
+	uint32_t val = HAL_ADC_GetValue(&hadc);		//gets the current adc value to use for the ADCtoCRR funct.
  80007f0:	4b07      	ldr	r3, [pc, #28]	; (8000810 <pollADC+0x38>)
  80007f2:	0018      	movs	r0, r3
  80007f4:	f000 fd40 	bl	8001278 <HAL_ADC_GetValue>
  80007f8:	0003      	movs	r3, r0
  80007fa:	607b      	str	r3, [r7, #4]
-	HAL_ADC_Stop(&hadc);
+	HAL_ADC_Stop(&hadc);		//stops polling the adc
  80007fc:	4b04      	ldr	r3, [pc, #16]	; (8000810 <pollADC+0x38>)
  80007fe:	0018      	movs	r0, r3
  8000800:	f000 fc62 	bl	80010c8 <HAL_ADC_Stop>
@@ -1264,7 +1260,7 @@ uint32_t ADCtoCRR(uint32_t adc_val){
 	//HINT: The CRR value for 100% DC is 47999 (DC = CRR/ARR = CRR/47999)
 	//HINT: The ADC range is approx 0 - 4095
 	//HINT: Scale number from 0-4096 to 0 - 47999
-	uint32_t val = (47999/4096)*adc_val;
+	uint32_t val = (47999/4096)*adc_val;		//converts adc to crr using a simple ratio
  800081c:	687a      	ldr	r2, [r7, #4]
  800081e:	0013      	movs	r3, r2
  8000820:	009b      	lsls	r3, r3, #2
